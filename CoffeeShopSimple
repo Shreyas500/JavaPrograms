@@ -1,0 +1,145 @@
+
+
+import java.util.*;
+public class CoffeeShop{
+    static String name = "Coffee Shop";
+    static String[][] menu = {{"CAPPUCCINO COFFEE","Drink","15"},{"SANDWICH","Food","30"},{"FILTER COFFEE","Drink","10"}};
+    static String[] orders = new String[3];
+
+
+    public static void addOrder(){
+        for(int i = 0;i< 3;i++){
+            orders[i] = "";
+        }
+        System.out.println("Welcome to  " + name);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter no of items to be ordered ");
+        int n = sc.nextInt();
+        sc.nextLine();//?
+        int flag = 0;
+        int r = 2;
+
+        for(int j = 0; j<n;j++){
+            System.out.println("Enter each item");
+            String item = sc.nextLine().toUpperCase();
+            for(int i=0;i<3;i++){// checks whether item in menu
+                if(item.equals(menu[i][0])){
+                    orders[r] = item; flag = 1;r--;
+                }
+
+
+            }
+            if(flag==0){
+                System.out.println("This Item is currently unavailable!");
+
+            }
+            flag = 0;
+        }
+        sc.close();
+    }
+
+    public static void fullfillOrder(){
+        int flag =1;
+        String b= "";
+
+        for(int i = 0; i<3;i++){
+            if(!orders[i].isEmpty()){
+                flag = 0;
+                for(int j = i;j<3;j++){
+                    b = b+(b.isEmpty()? "":",")+orders[j];
+                }
+
+                System.out.println("The" + b + "are ready");
+                break;
+            }
+        }
+        if(flag == 1)
+            System.out.println("All orders have been fullfilled!");
+    }
+
+
+    public static void listOrders(){
+        for(int i = 0; i<3;i++)
+            System.out.print( orders[i] + " ");
+    }
+
+    public static void dueAmount(){
+        String check;
+        int amt = 0;
+        for(int i = 0;i<3;i++){
+            check = menu[i][0];
+            for(int j = 0; j<3;j++){
+                if(orders[j].equals(check)){
+                    amt+=Integer.parseInt(menu[i][2]);
+                }
+            }
+
+        }
+        System.out.println("Total amount is" + amt);
+    }
+
+    /*public static void cheapestItem(){
+    String item = "";
+      int cheap = Integer.parseInt(menu[0][2]);
+      for(int i = 0; i<2;i++){
+        for(int j = 0; j<2;j++){
+          if(menu[j][0].equals(orders[i])){
+            if(Integer.parseInt(menu[j][2])<cheap){
+              cheap = Integer.parseInt(menu[j][2]);
+              item = menu[j][0];
+            }
+          }
+        }
+      }
+      System.out.println("Cheapest Menu item is " + item);
+  }*/
+
+    public static void cheapestItem(){
+        String item = menu[0][0];
+        int cheap = Integer.parseInt(menu[0][2]);
+
+        for(int i = 0;i<3;i++){
+            if(Integer.parseInt(menu[i][2])<cheap){
+                cheap = Integer.parseInt(menu[i][2]);
+                item = menu[i][0];
+            }
+        }
+        System.out.println("Cheapest item in menu is " + item);
+    }
+
+    public static void drinksOnly(){
+        for(int i = 0; i<3;i++){
+            if(menu[i][1].equals("Drink")){
+                System.out.println("Drink" + menu[i][0]);
+            }
+        }
+    }
+
+    public static void foodOnly(){
+        for(int i = 0; i<3;i++){
+            if(menu[i][1].equals("Food"))
+                System.out.println("Eat" + menu[i][0]);
+        }
+    }
+
+    public static void main(String[] args){
+        addOrder();
+        fullfillOrder();
+        listOrders();
+        dueAmount();
+        cheapestItem();
+        drinksOnly();
+        foodOnly();
+
+    }
+
+
+
+
+
+
+
+
+
+
+}
